@@ -22,7 +22,7 @@ export function CakeBuilder() {
   const [notes, setNotes] = useState('')
   const current = types.find(t => t.id === type)!
 
-  const total = useMemo(() => (type === 'festa' ? 60 * kg[size] : type === 'cafe' ? 25 : 20) + (box ? 10 : 0), [type, size, box])
+  const total = useMemo(() => (type === 'festa' ? 60 * (kg[size] ?? 1) : type === 'cafe' ? 25 : 20) + (box ? 10 : 0), [type, size, box])
 
   const link = useMemo(() => {
     const lines = [
