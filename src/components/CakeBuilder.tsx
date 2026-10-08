@@ -8,6 +8,12 @@ const types = [
   { id: 'cafe', label: 'Bolo de café', hint: 'R$ 25,00 · até 13 fatias', flavors: coffeeFlavors },
   { id: 'simples', label: 'Bolo simples', hint: 'R$ 20,00', flavors: simpleFlavors },
 ] as const
+// Valores de exemplo — substituir pelos fretes reais da Ondina
+const zones = [
+  { id: 'centro', label: 'Centro e perímetro urbano', fee: 0 },
+  { id: 'bairros', label: 'Bairros afastados', fee: 8 },
+  { id: 'rural', label: 'Bairros rurais próximos', fee: 15 },
+]
 const kg: Record<string, number> = { '1 kg': 1, '1,5 kg': 1.5, '2 kg': 2, '3 kg': 3, '4 kg': 4 }
 const brl = (n: number) => n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
 
@@ -16,13 +22,15 @@ export function CakeBuilder() {
   const [flavor, setFlavor] = useState('')
   const [size, setSize] = useState('1 kg')
   const [delivery, setDelivery] = useState<'entrega' | 'retirada'>('entrega')
+  const [zone, setZone] = useState(zones[0].id)
   const [box, setBox] = useState(false)
   const [date, setDate] = useState('')
   const [name, setName] = useState('')
   const [notes, setNotes] = useState('')
+  const fee = delivery === 'entrega' ? zones.find(z => z.id === zone)!.fee : 0
   const current = types.find(t => t.id === type)!
 
-  const total = useMemo(() => (type === 'festa' ? 60 * (kg[size] ?? 1) : type === 'cafe' ? 25 : 20) + (box ? 10 : 0), [type, size, box])
+  const total = useMemo(() => (type === 'festa' ? 60 * (kg[size] ?? 1) : type === 'cafe' ? 25 : 20) + (box ? 10 : 0) + fee, [type, size, box, fee])
 
   const link = useMemo(() => {
     const lines = [
@@ -30,7 +38,7 @@ export function CakeBuilder() {
       `• Tipo: ${current.label}`,
       `• Sabor: ${flavor || 'a combinar'}`,
       type === 'festa' ? `• Tamanho: ${size} (${portions.find(p => p.weight === size)?.people.toLowerCase()})` : '',
-      `• ${delivery === 'entrega' ? 'Entrega (perímetro urbano de São Miguel Arcanjo)' : 'Retirada na Rua Tapixi, 412'}`,
+      `• ${delivery === 'entrega' ? `Entrega: ${zones.find(z => z.id === zone)!.label} (frete ${fee ? brl(fee) : 'grátis'})` : 'Retirada na Rua Tapixi, 412'}`,
       box ? '• Com caixa para viagem' : '',
       date ? `• Para: ${date.split('-').reverse().join('/')}` : '',
       name ? `• Nome: ${name}` : '',
@@ -38,7 +46,7 @@ export function CakeBuilder() {
       `Valor estimado: ${brl(total)}`,
     ].filter(Boolean)
     return `https://api.whatsapp.com/send?phone=5515997115450&text=${encodeURIComponent(lines.join('\n'))}`
-  }, [current, flavor, type, size, delivery, box, date, name, notes, total])
+  }, [current, flavor, type, size, delivery, zone, fee, box, date, name, notes, total])
 
   return (
     <section className="builder" id="monte" aria-labelledby="builder-title">
@@ -69,9 +77,11 @@ export function CakeBuilder() {
 
           <fieldset><legend>{type === 'festa' ? '4' : '3'}. Entrega</legend>
             <div className="chip-row">
-              <button type="button" className={`choice ${delivery === 'entrega' ? 'is-on' : ''}`} onClick={() => setDelivery('entrega')}><strong>Entrega grátis</strong><span>Perímetro urbano de São Miguel Arcanjo</span></button>
+              <button type="button" className={`choice ${delivery === 'entrega' ? 'is-on' : ''}`} onClick={() => setDelivery('entrega')}><strong>Entrega</strong><span>Frete conforme a região da cidade</span></button>
               <button type="button" className={`choice ${delivery === 'retirada' ? 'is-on' : ''}`} onClick={() => setDelivery('retirada')}><strong>Retirada</strong><span>Rua Tapixi, 412 — Vila Tomaz</span></button>
             </div>
+            {delivery === 'entrega' && <div className="flavor-pick zone-pick">{zones.map(z => (
+              <button type="button" key={z.id} className={`chip ${zone === z.id ? 'is-on' : ''}`} onClick={() => setZone(z.id)}>{z.label} · {z.fee ? brl(z.fee) : 'Grátis'}</button>))}</div>}
             <label className="check"><input type="checkbox" checked={box} onChange={e => setBox(e.target.checked)} /> Caixa para viagem (+ R$ 10,00)</label>
           </fieldset>
 
@@ -90,7 +100,7 @@ export function CakeBuilder() {
             <li><Check size={15} />{current.label}</li>
             <li><Check size={15} />{flavor || 'Escolha um sabor'}</li>
             {type === 'festa' && <li><Check size={15} />{size} · {portions.find(p => p.weight === size)?.people}</li>}
-            <li><Check size={15} />{delivery === 'entrega' ? 'Entrega grátis' : 'Retirada'}</li>
+            <li><Check size={15} />{delivery === 'entrega' ? `Frete: ${fee ? brl(fee) : 'grátis'}` : 'Retirada'}</li>
             {box && <li><Check size={15} />Caixa para viagem</li>}
           </ul>
           <p className="summary-label">Valor estimado</p>
