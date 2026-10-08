@@ -143,3 +143,4 @@
 .builder-summary a[aria-disabled=true] { opacity:.5; cursor:not-allowed; }
 .summary-hint { font-size:12.5px; color:var(--muted-foreground); margin-top:8px; }
 @media (max-width:860px) { .builder-grid { grid-template-columns:1fr; } .builder-summary { position:static; } .field-row { grid-template-columns:1fr; } .builder h2 { font-size:28px; } }
+.zone-pick { margin-top:12px; }
