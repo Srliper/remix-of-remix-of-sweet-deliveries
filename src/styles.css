@@ -114,3 +114,32 @@
 @media(max-width:600px) { .bakery-container {width:calc(100% - 36px)} .bakery-nav-inner {height:76px} .brand img {width:40px;height:40px} .brand-name {font-size:21px} .nav-actions {gap:10px} .nav-catalog,.nav-location {display:none!important} .nav-actions .bakery-button {padding:0 15px;height:38px;font-size:11px} .bakery-hero {grid-template-columns:1fr; gap:30px; padding-top:30px;padding-bottom:45px} .bakery-hero h1 {font-size:44px} .hero-eyebrow {margin-bottom:14px} .hero-description {margin:18px 0 20px;font-size:13px} .hero-photo {aspect-ratio:5/4;max-height:350px;border-radius:26px;object-position:center 60%} .hero-caption {left:12px;bottom:-15px;padding:12px 17px;border-radius:12px} .hero-caption p {font-size:19px} .catalog {padding-top:30px;padding-bottom:45px} .catalog h2 {font-size:33px} .catalog-filters {gap:5px;flex-wrap:wrap} .bakery-filter {padding:0 11px;font-size:10px} .cake-grid {gap:28px 14px} .cake-image {border-radius:16px} .cake-item h3 {font-size:18px;min-height:48px} .cake-category {font-size:8px;margin-top:12px} .bakery-order {font-size:10px} .footer-columns {grid-template-columns:1fr;gap:30px} .bakery-footer {padding-top:40px} .footer-bottom {gap:15px} }
 @media(max-width:600px) { .bakery-hero { padding-top:24px; gap:22px; padding-bottom:30px; } .bakery-hero h1 {font-size:38px} .hero-description {line-height:1.65; margin:15px 0} .hero-photo {height:230px; aspect-ratio:auto;} .hero-cta {gap:12px} .hero-note {font-size:10px} }
 @media(prefers-reduced-motion:reduce) { html{scroll-behavior:auto} *,*::before,*::after {transition:none!important;animation:none!important} }
+
+.builder { padding:60px 0; border-top:1px solid var(--border); }
+.builder-grid { display:grid; grid-template-columns:1fr 320px; gap:40px; align-items:start; }
+.builder-eyebrow { color:var(--rose-ink); font-size:13px; letter-spacing:.08em; text-transform:uppercase; font-weight:600; }
+.builder h2 { font-family:var(--font-serif); font-size:34px; margin:6px 0 24px; }
+.builder fieldset { border:0; padding:0; margin:0 0 26px; }
+.builder legend { font-weight:600; margin-bottom:12px; }
+.chip-row { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:10px; }
+.choice { text-align:left; border:1px solid var(--border); background:var(--card); border-radius:12px; padding:12px 14px; display:flex; flex-direction:column; gap:2px; cursor:pointer; transition:border-color .15s, background .15s; }
+.choice span { font-size:12.5px; color:var(--muted-foreground); }
+.choice.is-on, .chip.is-on { border-color:var(--rose-ink); background:var(--secondary); box-shadow:0 0 0 1px var(--rose-ink); }
+.flavor-pick { display:flex; flex-wrap:wrap; gap:8px; }
+.chip { border:1px solid var(--border); background:var(--card); border-radius:999px; padding:7px 14px; font-size:14px; cursor:pointer; }
+.builder-desc { margin-top:12px; font-size:14px; color:var(--muted-foreground); max-width:60ch; }
+.check { display:flex; gap:8px; align-items:center; margin-top:14px; font-size:14px; }
+.field-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px; }
+.builder label:not(.check) { display:flex; flex-direction:column; gap:6px; font-size:14px; }
+.builder input:not([type=checkbox]), .builder textarea { border:1px solid var(--border); background:var(--card); border-radius:10px; padding:10px 12px; font:inherit; color:var(--foreground); }
+.builder textarea { min-height:80px; resize:vertical; }
+.builder-summary { position:sticky; top:90px; background:var(--card); border:1px solid var(--border); border-radius:18px; padding:24px; box-shadow:var(--hero-shadow); }
+.builder-summary h3 { font-family:var(--font-serif); font-size:24px; margin-bottom:14px; }
+.builder-summary ul { list-style:none; padding:0; display:grid; gap:8px; font-size:14px; margin-bottom:18px; }
+.builder-summary li { display:flex; gap:8px; align-items:center; }
+.builder-summary li svg { color:var(--rose-ink); flex:none; }
+.summary-label { font-size:13px; color:var(--muted-foreground); }
+.summary-total { font-family:var(--font-serif); font-size:34px; margin-bottom:16px; }
+.builder-summary a[aria-disabled=true] { opacity:.5; cursor:not-allowed; }
+.summary-hint { font-size:12.5px; color:var(--muted-foreground); margin-top:8px; }
+@media (max-width:860px) { .builder-grid { grid-template-columns:1fr; } .builder-summary { position:static; } .field-row { grid-template-columns:1fr; } .builder h2 { font-size:28px; } }
