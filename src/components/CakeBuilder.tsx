@@ -22,7 +22,7 @@ export function CakeBuilder() {
   const [flavor, setFlavor] = useState('')
   const [size, setSize] = useState('1 kg')
   const [delivery, setDelivery] = useState<'entrega' | 'retirada'>('entrega')
-  const [zone, setZone] = useState(zones[0].id)
+  const [zone, setZone] = useState('centro')
   const [box, setBox] = useState(false)
   const [date, setDate] = useState('')
   const [name, setName] = useState('')
