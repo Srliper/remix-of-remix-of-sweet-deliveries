@@ -12,6 +12,7 @@ import beijinho from '@/assets/beijinho_abacaxi.jpg'
 import chocolate from '@/assets/chocolate_morangos.jpg'
 import sonho from '@/assets/sonho_valsa.jpg'
 import logo from '@/assets/ondina_logo.jpg.asset.json'
+import { CakeBuilder } from '@/components/CakeBuilder'
 import { partyFlavors, coffeeFlavors, simpleFlavors, portions } from '@/lib/bakery-menu'
 
 const location = 'https://maps.app.goo.gl/DtPo1uTkxT1tYZCe9'
@@ -43,7 +44,7 @@ function Index() {
  return <div>
   <nav className="bakery-nav" aria-label="Navegação principal"><div className="bakery-container bakery-nav-inner">
    <a className="brand" href="#" aria-label="Ondina Bolos, início"><img src={logo.url} alt="Logo Ondina Bolos"/><div><div className="brand-name">Ondina Bolos</div><div className="brand-since">DESDE 2003</div></div></a>
-   <div className="nav-actions"><a className="nav-catalog" href="#bolos">Nossos bolos</a><a className="nav-location" href={location} target="_blank" rel="noreferrer"><MapPin size={14}/>Localização</a><Button asChild variant="cocoa"><a href={whatsapp()} target="_blank" rel="noreferrer"><MessageCircle/>Pedir agora</a></Button></div>
+   <div className="nav-actions"><a className="nav-catalog" href="#bolos">Nossos bolos</a><a className="nav-catalog" href="#monte">Monte seu bolo</a><a className="nav-location" href={location} target="_blank" rel="noreferrer"><MapPin size={14}/>Localização</a><Button asChild variant="cocoa"><a href={whatsapp()} target="_blank" rel="noreferrer"><MessageCircle/>Pedir agora</a></Button></div>
   </div></nav>
   <main>
    <header className="bakery-container bakery-hero">
@@ -60,6 +61,7 @@ function Index() {
      </div>
      {(category === 'Todos' || category === 'Festas') && <div className="portion-guide"><h3>Qual tamanho escolher?</h3><div className="portion-list">{portions.map(portion => <div key={portion.weight}><strong>{portion.weight}</strong><span>{portion.people}</span></div>)}</div></div>}
    </section>
+    <CakeBuilder/>
     <section className="service-info" aria-labelledby="service-title"><div className="bakery-container"><h2 id="service-title">Entrega e atendimento</h2><div className="service-columns"><div><h3>Horários</h3><dl><div><dt>Segunda a sexta</dt><dd>07:00 às 18:00</dd></div><div><dt>Sábado</dt><dd>07:00 às 20:00</dd></div><div><dt>Domingo</dt><dd>Fechado</dd></div></dl></div><div><h3>Entrega e retirada</h3><p>Entregamos sem taxa no perímetro urbano de São Miguel Arcanjo.</p><p>Para outras localidades, retire seu bolo na Rua Tapixi, 412 — Vila Tomaz, durante o horário de funcionamento.</p><Button asChild variant="order"><a href={location} target="_blank" rel="noreferrer"><MapPin size={16}/>Ver no mapa<ArrowUpRight/></a></Button></div><div><h3>Caixa para viagem</h3><p className="packaging-price">R$ 10,00</p><p>Embalagem para transportar seu bolo em viagens.</p></div></div></div></section>
   </main>
    <footer className="bakery-footer"><div className="bakery-container"><div className="footer-columns"><div><h2 className="footer-title">Ondina Bolos</h2><p className="footer-copy">Desde 2003, presente nos seus momentos doces.</p></div><div><p className="footer-label">Fale com a Ondina</p><a className="footer-phone" href="tel:+5515997115450">+55 15 99711-5450</a><a className="footer-link" href={whatsapp()} target="_blank" rel="noreferrer"><MessageCircle size={16}/>Conversar no WhatsApp<ArrowUpRight size={14}/></a></div><div><p className="footer-label">Nossa localização</p><p className="footer-copy">Rua Tapixi, 412 — Vila Tomaz<br/>São Miguel Arcanjo</p><a className="footer-link" href={location} target="_blank" rel="noreferrer"><MapPin size={17}/>Abrir no Google Maps<ArrowUpRight size={14}/></a></div></div><div className="footer-bottom"><span>© 2026 Ondina Bolos</span><span>Desde 2003</span></div></div></footer>
